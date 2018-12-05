@@ -127,18 +127,27 @@ descBtn.forEach(function(item) {
 
     let form = document.querySelector('.main-form'),
         input = form.getElementsByTagName('input'),
+        inputs = document.querySelectorAll('input'),
         statusMessage = document.createElement('div');
        
 
         statusMessage.classList.add('status');
-
-        // input.addEventListener('tel', restrictToInteger); 
- 
-        // function restrictToInteger() { 
-         
-        //     this.value = this.value.replace(/[^\d.]/g, ''); 
-         
-        // }
+    
+    
+        inputs.forEach(function (item) {
+            if (item.type == "tel") {
+                item.addEventListener("keydown", function (e) {
+                    console.log(e);
+                    if (!/\d|\+/gm.test(e.key) && e.keyCode != 8) {
+                        e.preventDefault();
+                    }
+                    if (item.value.indexOf("+") != -1 && e.key == "+") {
+                        e.preventDefault();
+                    }
+                });
+            }
+        });
+        
 
     form.addEventListener('submit', function(event) {
         event.preventDefault();
